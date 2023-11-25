@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+
+	<meta charest = "UTF-8">
+	<meta name = "viewpiont" content = "width = device - width, initial - scale = 1.0"> 
+
+	<title>My first CSS stylesheet </title>
+
+	<style>
+
+		body {
+			 font-family: Arial, sans-serif; 
+        }
+
+        h1 {
+            font-family: "Impact",snas-serif; 
+        }
+
+		ul.navbar{
+
+			position:relative;
+			top:10px;
+			left:20px;
+			width:10em;
+		}
+
+		@media all{
+
+			body{
+				font-size:16px;
+			}
+		}
+
+		@media print{
+			body{
+				color:#E5E4E2;
+				background-color:#353935 ;
+			}
+		}
+	</style>
+</head>
+<body color = #E5E4E2 background-color = #353935 >
+
+
+	<h1>My first style page</h1>
+	<p>This is the first paragraph</p>
+	<p>This is the second paragraph</p>
+	<p>This is the third paragraph</p>
+
+	<ul class = "navbar">
+		<li>item 1</li>
+		<li>item 2</li>
+		<li>item 3</li>
+		<li>item 4</li>
+	</ul>
+
+    <ul style="position: relative;top: 10px; left: 20px; width: 10em;">
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+    </ul>
+
+ 
+
+	<select>
+		<option value = "apple">Option 1</option>
+		<option value = "banana">Option 2</option>
+		<option value = "grava">Option 3</option>
+	</select>
+</body>
+</html>
