@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Number Guessing Game</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Number Guessing Game</h1>
+  <button onclick="startGame()">Start Game</button>
+
+  <script>
+    let secretNumber;
+    let attempts;
+
+    function startGame() {
+      // Generate a random number between 1 and 10
+      secretNumber = Math.floor(Math.random() * 10) + 1;
+      attempts = 0;
+
+      playGame();
+    }
+
+    function playGame() {
+      while (true) {
+        const userGuessString = window.prompt('Guess a number between 1 and 10:');
+        const userGuess = parseInt(userGuessString);
+
+        if (isNaN(userGuess) || userGuess < 1 || userGuess > 10) {
+          alert('Please enter a valid number between 1 and 10.');
+        } else {
+          attempts++;
+
+          if (userGuess === secretNumber) {
+            alert(`Congratulations! You guessed the correct number in ${attempts} attempts.`);
+            break;
+          } else {
+            const hint = userGuess < secretNumber ? 'Too low!' : 'Too high!';
+            alert(`Incorrect. ${hint} Try again.`);
+          }
+        }
+      }
+    }
+  </script>
+</body>
+</html>
