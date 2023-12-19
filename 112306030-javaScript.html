@@ -3,51 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Number Guessing Game</title>
+  <title>Input Comparison</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
+      font-family: Arial, sans-serif;
       text-align: center;
-      margin-top: 50px;
+      padding: 20px;
+    }
+    button {
+      padding: 10px;
+      margin: 10px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <h1>Number Guessing Game</h1>
-  <button onclick="startGame()">Start Game</button>
 
-  <script>
-    let secretNumber;
-    let attempts;
+<script>
+  function compareInputs() {
+    
+    var firstInput = prompt("Enter the first input:");
+    var secondInput = prompt("Enter the second input:");
 
-    function startGame() {
-     
-      secretNumber = Math.floor(Math.random() * 10) + 1;
-      attempts = 0;
-
-      playGame();
+    
+    if (firstInput > secondInput) {
+      document.body.style.backgroundColor = 'lightblue';
+      document.body.innerHTML =  " firstInput > secondInput " ;
+    } else if (secondInput > firstInput) {
+      document.body.style.backgroundColor = 'orange';
+      document.body.innerHTML = " secondInput > firstInput" ;
+    } else {
+      document.body.style.backgroundColor = 'lightyellow';
+      document.body.innerHTML =  "secondInput == firstInput";
     }
+  }
 
-    function playGame() {
-      while (true) {
-        const userGuessString = window.prompt('Guess a number between 1 and 10:');
-        const userGuess = parseInt(userGuessString);
+  function showFirstInput() {
+    alert("First Input: " + prompt("Enter the first input:"));
+  }
 
-        if (isNaN(userGuess) || userGuess < 1 || userGuess > 10) {
-          alert('Please enter a valid number between 1 and 10.');
-        } else {
-          attempts++;
+  function showSecondInput() {
+    alert("Second Input: " + prompt("Enter the second input:"));
+  }
+</script>
 
-          if (userGuess === secretNumber) {
-            alert(`Congratulations! You guessed the correct number in ${attempts} attempts.`);
-            break;
-          } else {
-            const hint = userGuess < secretNumber ? 'Too low!' : 'Too high!';
-            alert(`Incorrect. ${hint} Try again.`);
-          }
-        }
-      }
-    }
-  </script>
+<button onclick="compareInputs()">Compare Inputs</button>
+<button onclick="showFirstInput()">Show First Input</button>
+<button onclick="showSecondInput()">Show Second Input</button>
+
 </body>
 </html>
+
