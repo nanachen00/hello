@@ -28,7 +28,7 @@
 
         function getUserInput(message) {
             let input = prompt(message);
-            // Validate if the input is a number
+          
             while (isNaN(input)) {
                 input = prompt("Invalid input. Please enter a number: ");
             }
@@ -37,7 +37,7 @@
 
         function getOperation() {
             let operation = prompt("Choose an operation: +, -, *, /");
-            // Validate if the operation is one of the valid options
+            
             while (!["+","-","*","/"].includes(operation)) {
                 operation = prompt("Invalid operation. Please choose +, -, *, /");
             }
@@ -73,7 +73,7 @@
 
                     alert(`Result: ${result}`);
 
-                    // Ask if the user wants to continue
+                   
                     const answer = prompt("Do you want to perform another calculation? (yes/no)").toLowerCase();
                     continueCalculating = answer === 'yes';
                 } catch (error) {
@@ -84,7 +84,7 @@
             alert("Calculator closed.");
         }
 
-        // Run the calculator when the page is loaded
+       
         window.onload = function () {
             calculator();
         };
