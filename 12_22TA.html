@@ -3,72 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tower of Hanoi</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin: 50px;
-    }
-    .tower {
-      margin: 10px;
-      display: inline-block;
-      text-align: left;
-      padding: 0 20px;
-    }
-  </style>
+  <title>Hanoi Tower</title>
 </head>
 <body>
+ 
   <h1>112306030_莊紫喬</h1>
-  <div id="towerA" class="tower"></div>
-  <div id="towerB" class="tower"></div>
-  <div id="towerC" class="tower"></div>
-  <br>
-  <button onclick="startHanoi()">Start Tower of Hanoi</button>
-
-  <script>
-    let towers = {
-      A: [],
-      B: [],
-      C: []
-    };
-
-    function displayState() {
-      let output = '';
-      for (let tower in towers) {
-        output += `<strong>${tower}</strong>: ${towers[tower].join(', ')}<br>`;
-      }
-      document.getElementById('output').innerHTML = output;
-    }
-
-    function moveDisk(source, target) {
-      const disk = towers[source].pop();
-      towers[target].push(disk);
-      displayState();
-    }
-
-    function hanoiTower(n, source, auxiliary, target) {
-      if (n === 1) {
-        moveDisk(source, target);
-      } else {
-        hanoiTower(n - 1, source, target, auxiliary);
-        moveDisk(source, target);
-        hanoiTower(n - 1, auxiliary, source, target);
-      }
-    }
-
-    function startHanoi() {
-      const numberOfDisks = 3
-      towers = {
-        A: Array.from({ length: numberOfDisks }, (_, index) => numberOfDisks - index),
-        B: [],
-        C: []
-      };
-      displayState();
-      hanoiTower(numberOfDisks, 'A', 'B', 'C');
-    }
-  </script>
 
   <div id="output"></div>
+
+  <script>
+    
+    const sourcePole = [3, 2, 1];
+    const auxiliaryPole = [];
+    const targetPole = [];
+
+ 
+    function hanoiTower(n, source, auxiliary, target) {
+      if (n === 0) {
+
+        return;
+      }
+
+      if (n === 1) {
+      
+        target.push(source.pop());
+        displayState();
+        return;
+      }
+
+    
+      hanoiTower(n - 1, source, target, auxiliary);
+
+    
+      target.push(source.pop());
+      displayState();
+
+   
+      hanoiTower(n - 1, auxiliary, source, target);
+    }
+
+ 
+    function displayState() {
+      document.getElementById('output').innerHTML += `
+        <p>A: ${sourcePole.join(', ')}</p>
+        <p>B: ${auxiliaryPole.join(', ')}</p>
+        <p>C: ${targetPole.join(', ')}</p>
+        <hr>
+      `;
+    }
+
+  
+    displayState();
+
+
+    hanoiTower(sourcePole.length, sourcePole, auxiliaryPole, targetPole);
+  </script>
 </body>
 </html>
