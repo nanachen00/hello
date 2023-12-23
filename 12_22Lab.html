@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dice Roller</title>
+  <style>
+    #diceContainer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+
+    img {
+      width: 50px;
+      height: 50px;
+      margin: 5px;
+    }
+
+    #rollButton {
+      margin-top: 10px;
+      padding: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #probabilityContainer {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="diceContainer"></div>
+  <button id="rollButton">Roll Dice</button>
+  <div id="probabilityContainer"></div>
+
+  <script>
+    function start() {
+      var button = document.getElementById("rollButton");
+      button.addEventListener("click", rollDice);
+
+      var diceImages = [];
+      var probabilityContainer = document.getElementById("probabilityContainer");
+
+      for (let i = 1; i <= 12; i++) {
+        var dieImage = document.createElement("img");
+        dieImage.setAttribute("id", "die" + i);
+        dieImage.setAttribute("src", "die1.png");
+        dieImage.setAttribute("alt", "blank image");
+        document.getElementById("diceContainer").appendChild(dieImage);
+        diceImages.push(dieImage);
+      }
+
+      function rollDice() {
+        var diceCounts = [0, 0, 0, 0, 0, 0]; // Array to count occurrences of each face
+
+        for (let i = 0; i < diceImages.length; i++) {
+          var dieValue = rollDie(diceImages[i]);
+          diceCounts[dieValue - 1]++;
+        }
+
+        updateProbability(diceCounts);
+      }
+
+      function rollDie(dieImg) {
+        // set src and alt attributes for dice
+        var dieValue = Math.floor(1 + Math.random() * 6);
+        // change the src attribute to the new pic 
+        dieImg.setAttribute("src", "die" + dieValue + ".png");
+        return dieValue;
+      }
+
+      function updateProbability(diceCounts) {
+        probabilityContainer.innerHTML = "<p>Probability:</p>";
+        for (let face = 1; face <= 6; face++) {
+          var probability = (diceCounts[face - 1] / 12 * 100).toFixed(2);
+          probabilityContainer.innerHTML += `<p>Face ${face}: ${probability}%</p>`;
+        }
+      }
+    }
+
+    window.addEventListener("load", start);
+  </script>
+</body>
+</html>
