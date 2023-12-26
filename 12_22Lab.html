@@ -1,85 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dice Roller</title>
-  <style>
-    #diceContainer {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rolling Dice and Displaying Statistics</title>
+    <style>
+        .die {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
 
-    img {
-      width: 50px;
-      height: 50px;
-      margin: 5px;
-    }
+        table {
+            border-collapse: collapse;
+            width: 30%;
+            margin-top: 20px;
+        }
 
-    #rollButton {
-      margin-top: 10px;
-      padding: 10px;
-      font-size: 16px;
-      cursor: pointer;
-    }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
 
-    #probabilityContainer {
-      margin-top: 20px;
-    }
-  </style>
+        th {
+            background-color: #f2f2f2;
+        }
+
+        #dice-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        #dice-container img {
+            display: block; 
+        }
+    </style>
 </head>
 <body>
-  <div id="diceContainer"></div>
-  <button id="rollButton">Roll Dice</button>
-  <div id="probabilityContainer"></div>
 
-  <script>
+<form action="#">
+    <input id="rollButton" type="button" value="Roll Dice">
+</form>
+
+<div id="dice-container"></div>
+
+<table id="probability-table">
+    <thead>
+        <tr>
+            <th>Face</th>
+            <th>Percent</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
     function start() {
-      var button = document.getElementById("rollButton");
-      button.addEventListener("click", rollDice);
+        var button = document.getElementById("rollButton");
+        button.addEventListener("click", rollDice, false);
 
-      var diceImages = [];
-      var probabilityContainer = document.getElementById("probabilityContainer");
+        displayInitialDice();
 
-      for (let i = 1; i <= 12; i++) {
-        var dieImage = document.createElement("img");
-        dieImage.setAttribute("id", "die" + i);
-        dieImage.setAttribute("src", "die1.png");
-        dieImage.setAttribute("alt", "blank image");
-        document.getElementById("diceContainer").appendChild(dieImage);
-        diceImages.push(dieImage);
-      }
-
-      function rollDice() {
-        var diceCounts = [0, 0, 0, 0, 0, 0]; 
-
-        for (let i = 0; i < diceImages.length; i++) {
-          var dieValue = rollDie(diceImages[i]);
-          diceCounts[dieValue - 1]++;
-        }
-
-        updateProbability(diceCounts);
-      }
-
-      function rollDie(dieImg) {
-        // set src and alt attributes for dice
-        var dieValue = Math.floor(1 + Math.random() * 6);
-        
-        dieImg.setAttribute("src", "die" + dieValue + ".png");
-        return dieValue;
-      }
-
-      function updateProbability(diceCounts) {
-        probabilityContainer.innerHTML = "<p>Probability:</p>";
-        for (let face = 1; face <= 6; face++) {
-          var probability = (diceCounts[face - 1] / 12 * 100).toFixed(2);
-          probabilityContainer.innerHTML += `<p>Face ${face}: ${probability}%</p>`;
-        }
-      }
+        updateProbabilityTable();
     }
 
-    window.addEventListener("load", start);
-  </script>
+    function displayInitialDice() {
+        var diceContainer = document.getElementById("dice-container");
+        for (var i = 0; i < 12; i++) {
+            createDie(3);
+        }
+    }
+
+    function rollDice() {
+        var diceContainer = document.getElementById("dice-container");
+        diceContainer.innerHTML = '';
+
+        for (var i = 0; i < 12; i++) {
+            createDie();
+        }
+
+        updateProbabilityTable();
+    }
+
+    function createDie(face = Math.floor(1 + Math.random() * 6)) {
+        var dieContainer = document.getElementById("dice-container");
+
+        var dieImage = document.createElement("img");
+        dieImage.className = "die";
+        dieImage.src = "die" + face + ".png";
+        dieImage.alt = "die image with " + face + " spot(s)";
+
+        dieContainer.appendChild(dieImage);
+    }
+
+    function updateProbabilityTable() {
+        var probabilityTableBody = document.querySelector("#probability-table tbody");
+        probabilityTableBody.innerHTML = '';
+
+        var frequency = [0, 0, 0, 0, 0, 0]; 
+
+        var diceImages = document.querySelectorAll(".die");
+        diceImages.forEach(function (dieImage) {
+            var face = parseInt(dieImage.alt.match(/\d+/)[0]);
+            frequency[face - 1]++;
+        });
+
+        for (var i = 0; i < 6; i++) {
+            var probability = (frequency[i] / 12 * 100).toFixed(2);
+            var row = "<tr><td>" + (i + 1) + "</td><td>" + probability + "%</td></tr>";
+            probabilityTableBody.innerHTML += row;
+        }
+    }
+
+    window.addEventListener("load", start, false);
+</script>
+
 </body>
 </html>
