@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guess the Number Game</title>
+
+  <!-- 1. Include CSS styles -->
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    input {
+      padding: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 8px 16px;
+      font-size: 16px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #result {
+      font-weight: bold;
+      margin-top: 20px;
+      color: #333;
+    }
+  </style>
+  
+
+<script>
+ 
+  let secretNumber = generateRandomNumber();
+
+
+  function generateRandomNumber() {
+    return Math.floor(Math.random() * 10) + 1;
+  }
+
+  function checkGuess() {
+
+    let userGuess = document.getElementById("userGuess").value;
+    let resultElement = document.getElementById("result");
+
+    
+    if (userGuess == secretNumber) {
+
+      resultElement.innerHTML = "Congratulations! You guessed the correct number!";
+      showImageAndPlaySound("C:\Users\USER\OneDrive\文件\112306030_GuessNumber\picture2.jpeg", "C:\Users\USER\OneDrive\文件\112306030_GuessNumber\music2.mp3");
+      
+      secretNumber = generateRandomNumber();
+    } else {
+     
+      resultElement.innerHTML = "Sorry, try again!";
+      showImageAndPlaySound("C:\Users\USER\OneDrive\文件\112306030_GuessNumber\picture1.jpeg", "C:\Users\USER\OneDrive\文件\112306030_GuessNumber\music1.mp3");
+    }
+    document.getElementById("userGuess").value = "";
+  }
+
+ 
+  function showImageAndPlaySound(imageSource, soundSource) {
+    let imageElement = document.createElement("img");
+    imageElement.src = imageSource;
+
+    let soundElement = document.createElement("audio");
+    soundElement.src = soundSource;
+    soundElement.autoplay = true;
+
+    let resultContainer = document.getElementById("result");
+    resultContainer.innerHTML = "";
+    resultContainer.appendChild(imageElement);
+    resultContainer.appendChild(soundElement);
+  }
+</script>
+
+</head>
+<body>
+
+  <div class="container">
+    <h1>Guess the Number Game</h1>
+    <p>Guess a number between 1 and 10:</p>
+
+   
+    <input type="number" id="userGuess" placeholder="Enter your guess" onkeydown="if (event.key === 'Enter') checkGuess()">
+    <button onclick="checkGuess()">Check Guess</button>
+
+    <div id="result"></div>
+  </div>
+
+</body>
+</html>
